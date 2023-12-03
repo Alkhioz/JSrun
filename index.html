@@ -68,6 +68,13 @@
       padding: .5rem;
       border: none;
     }
+    .exjs-copy-btn{
+      background-color: darkblue;
+      color: white;
+      padding: .5rem;
+      border: none;
+
+    }
     .exjs-execute-btn:hover{
       scale: 105%;
     }
@@ -95,6 +102,7 @@
     <section class="exjs-editor">
       <header class="exjs-bar">
         <button class="exjs-execute-btn" id="exjs-execute-btn">Execute</button>
+        <button class="exjs-copy-btn" id="exjs-copy-btn">Copy</button>
         <button class="exjs-clear-btn" id="exjs-clear-btn">Clear console</button>
       </header>
       <div class="exjs-editor-container">
@@ -109,6 +117,7 @@
     document.addEventListener("DOMContentLoaded",()=>{
       const exebtn = document.querySelector("#exjs-execute-btn");
       const clsbtn = document.querySelector("#exjs-clear-btn");
+      const cpbtn = document.querySelector("#exjs-copy-btn");
       console.originalLog = console.log;
       console.log = function() {
         var args = Array.prototype.splice.call(arguments, 0); 
@@ -131,6 +140,11 @@
       clsbtn.addEventListener("click", ()=>{
         const _console = document.querySelector("#exjs-console");
         _console.innerHTML = '';
+      });
+      cpbtn.addEventListener("click", async ()=>{
+        const code = document.querySelector("#exjs-editor-content");
+        await navigator.clipboard.writeText(code.value);
+        console.log('copied to clipboard');
       });
     });
   </script>
