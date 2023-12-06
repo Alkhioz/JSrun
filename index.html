@@ -8,22 +8,20 @@
 </head>
 <body>
   <main class="jsrun-app">
+    <nav class="jsrun-navbar">
+      <button class="jsrun-navbar-button" id="js-run-button">Run code</button>
+      <button class="jsrun-navbar-button" id="js-copy-button">Copy code</button>
+    </nav>
     <div class="jsrun-content-container">
       <textarea class="jsrun-editor" id="jsrun-editor" spellcheck="false"></textarea>
     </div>
-    <div class="js-run-footer">
-      <div class="jsrun-console">
-        <div class="jsrun-console-actions">
-          <div class="jsrun-console-actions-title">Console</div>
-          <button class="jsrun-console-actions-button" id="js-copy-button">CP</button>
-          <button class="jsrun-console-actions-button" id="js-clean-button">CLS</button>
-        </div>
-        <div class="jsrun-console-output-container">
-          <div class="jsrun-console-output" id="jsrun-console-output"></div>
-        </div>
+    <div class="jsrun-console">
+      <div class="jsrun-console-actions">
+        <div class="jsrun-console-actions-title">Console</div>
+        <button class="jsrun-console-actions-button" id="js-clean-button">Clear console</button>
       </div>
-      <div class="jsrun-action-menu">
-        <button class="jsrun-action-menu-button" id="js-run-button">🗲</button>
+      <div class="jsrun-console-output-container">
+        <div class="jsrun-console-output" id="jsrun-console-output"></div>
       </div>
     </div>
   </main>

@@ -9,7 +9,16 @@ document.addEventListener("DOMContentLoaded",()=>{
       const _console = document.querySelector("#jsrun-console-output");
       const infoToLog = document.createElement("div");
       infoToLog.classList.add("jsrun-log-item");
-      infoToLog.innerHTML = 'jsrun >   ' + args.map(arg=>typeof arg === "object" ? JSON.stringify(arg) : arg).join(' ');
+      infoToLog.appendChild(document.createTextNode('jsrun >   ' + args.map(arg=>typeof arg === "object" ? JSON.stringify(arg) : arg).join(' ')));
+      const copylogbuton = document.createElement('button');
+      copylogbuton.innerHTML = 'Copy';
+      copylogbuton.classList.add('jsrun-log-item-copy-button');
+      copylogbuton.addEventListener('click', async()=>{
+        await navigator.clipboard.writeText(
+          args.map(arg=>typeof arg === "object" ? JSON.stringify(arg) : arg).join(' ')
+        );
+      });
+      infoToLog.appendChild(copylogbuton);
       _console.appendChild(infoToLog);
     };
     exebtn.addEventListener("click", ()=>{
@@ -28,6 +37,5 @@ document.addEventListener("DOMContentLoaded",()=>{
     cpbtn.addEventListener("click", async ()=>{
       const code = document.querySelector("#jsrun-editor");
       await navigator.clipboard.writeText(code.value);
-      console.log('copied to clipboard');
     });
 });
