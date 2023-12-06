@@ -3,150 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ExecuteJs</title>
-  <style>
-    * {
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-    }
-    .exjs-app{
-      width: 100svw;
-      height: 100svh;
-      background-color: aqua;
-      display: grid;
-      grid-template-columns: 1fr auto;
-    }
-    .exjs-editor{
-      display: grid;
-      grid-template-rows: auto 1fr;
-    }
-    .exjs-editor-container{
-      background-color: black;
-      color: white;
-      position: relative;
-      overflow: hidden;
-    }
-    .exjs-editor-content {
-      background-color: black;
-      resize: none;
-      color: white;
-      width: 100%;
-      height: 100%;
-      padding: 2rem;
-      position: absolute;
-      overflow: scroll;
-    }
-    .exjs-console-container{
-      position: relative;
-      width: 25rem;
-      overflow: hidden;
-    }
-    .exjs-console{
-      position: absolute;
-      background-color: black;
-      color: white;
-      padding: 2rem;
-      overflow: scroll;
-      width: 100%;
-      height: 100%;
-    }
-    .exjs-bar{
-      background-color: black;
-      padding: .5rem;
-      border: 1px solid white;
-    }
-    .exjs-execute-btn{
-      background-color: darkgreen;
-      color: white;
-      padding: .5rem;
-      border: none;
-    }
-    .exjs-clear-btn{
-      background-color: darkred;
-      color: white;
-      padding: .5rem;
-      border: none;
-    }
-    .exjs-copy-btn{
-      background-color: darkblue;
-      color: white;
-      padding: .5rem;
-      border: none;
-
-    }
-    .exjs-execute-btn:hover{
-      scale: 105%;
-    }
-    .exjs-log-item{
-      border-bottom: 1px solid white;
-      padding: 0.5rem;
-      overflow-wrap: anywhere;
-    }
-    @media screen and (max-width: 600px) {
-      .exjs-app {
-        grid-template-columns: 1fr;
-        grid-template-rows: 1fr auto;
-      }
-      .exjs-console-container{
-        position: relative;
-        width: 100%;
-        height: 10rem;
-        overflow: hidden;
-      }
-    }
-  </style>
+  <title>RunJS</title>
+  <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-  <main class="exjs-app">
-    <section class="exjs-editor">
-      <header class="exjs-bar">
-        <button class="exjs-execute-btn" id="exjs-execute-btn">Execute</button>
-        <button class="exjs-copy-btn" id="exjs-copy-btn">Copy</button>
-        <button class="exjs-clear-btn" id="exjs-clear-btn">Clear console</button>
-      </header>
-      <div class="exjs-editor-container">
-        <textarea class="exjs-editor-content" id="exjs-editor-content" spellcheck="false"></textarea>
+  <main class="jsrun-app">
+    <nav class="jsrun-navbar">
+      <button class="jsrun-navbar-button" id="js-run-button">Run code</button>
+      <button class="jsrun-navbar-button" id="js-copy-button">Copy code</button>
+    </nav>
+    <div class="jsrun-content-container">
+      <textarea class="jsrun-editor" id="jsrun-editor" spellcheck="false"></textarea>
+    </div>
+    <div class="jsrun-console">
+      <div class="jsrun-console-actions">
+        <div class="jsrun-console-actions-title">Console</div>
+        <button class="jsrun-console-actions-button" id="js-clean-button">Clear console</button>
       </div>
-    </section>
-    <aside class="exjs-console-container">
-      <div class="exjs-console" id="exjs-console" spellcheck="false"></div>
-    </aside>
+      <div class="jsrun-console-output-container">
+        <div class="jsrun-console-output" id="jsrun-console-output"></div>
+      </div>
+    </div>
   </main>
-  <script>
-    document.addEventListener("DOMContentLoaded",()=>{
-      const exebtn = document.querySelector("#exjs-execute-btn");
-      const clsbtn = document.querySelector("#exjs-clear-btn");
-      const cpbtn = document.querySelector("#exjs-copy-btn");
-      console.originalLog = console.log;
-      console.log = function() {
-        var args = Array.prototype.splice.call(arguments, 0); 
-        console.originalLog.apply(this, args);  
-        const _console = document.querySelector("#exjs-console");
-        const infoToLog = document.createElement("div");
-        infoToLog.classList.add("exjs-log-item");
-        infoToLog.innerHTML = args.map(arg=>typeof arg === "object" ? JSON.stringify(arg) : arg).join(' ');
-        _console.appendChild(infoToLog);
-      };
-      exebtn.addEventListener("click", ()=>{
-        const code = document.querySelector("#exjs-editor-content");
-        try{
-          const f = new Function(code.value);
-          f();
-        }catch(e){
-          console.log(e, e.stack);
-        }
-      });
-      clsbtn.addEventListener("click", ()=>{
-        const _console = document.querySelector("#exjs-console");
-        _console.innerHTML = '';
-      });
-      cpbtn.addEventListener("click", async ()=>{
-        const code = document.querySelector("#exjs-editor-content");
-        await navigator.clipboard.writeText(code.value);
-        console.log('copied to clipboard');
-      });
-    });
-  </script>
+  <script src="./assets/js/main.js"></script>
 </body>
 </html>
